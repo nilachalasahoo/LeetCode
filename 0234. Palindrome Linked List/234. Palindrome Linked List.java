@@ -9,12 +9,34 @@
  * }
  */
 class Solution {
-    public boolean isPalindrome(ListNode head) {
-        ListNode temp1=head;
-        ListNode temp2=head;
-        while(temp2!=null && temp2.next!=null){
-            temp1=temp1.next;
-            temp2=temp2.next.next;
+    private ListNode reverse(ListNode head){
+        if(head.next==null)
+            return head;
+        ListNode x=head;
+        head=reverse(head.next);
+        x.next.next=x;
+        x.next=null;
+        return head;
+    }
+    private ListNode middle(ListNode head){
+        ListNode fast=head.next;
+        while(fast!=null && fast.next!=null){
+            head=head.next;
+            fast=fast.next.next;
         }
+        return head;
+    }
+    public boolean isPalindrome(ListNode head) {
+        if(head.next==null)
+            return true;
+        ListNode root=middle(head);
+        root=reverse(root.next);
+        while(root!=null){
+            if(root.val!=head.val)
+                return false;
+            root=root.next;
+            head=head.next;
+        }
+        return true;
     }
 }
