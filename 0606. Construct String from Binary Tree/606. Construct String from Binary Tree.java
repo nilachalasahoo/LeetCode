@@ -14,25 +14,25 @@
  * }
  */
 class Solution {
-    private StringBuilder helper(TreeNode root){
-        StringBuilder s=new StringBuilder();
+    StringBuilder s;
+    private void helper(TreeNode root){
         if(root==null)
-            return s;
+            return;
         s.append(root.val);
         if(root.left==null && root.right==null)
-            return s;
+            return;
         s.append('(');
-        s.append(helper(root.left));
+        helper(root.left);
         s.append(')');
-        if(root.right==null){
-            return s;
+        if(root.right!=null){
+            s.append('(');
+            helper(root.right);
+            s.append(')');
         }
-        s.append('(');
-        s.append(helper(root.right));
-        s.append(')');
-        return s;
     }
     public String tree2str(TreeNode root) {
-        return helper(root).toString();
+        s=new StringBuilder();
+        helper(root);
+        return s.toString();
     }
 }
